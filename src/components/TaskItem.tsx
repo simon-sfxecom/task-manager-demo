@@ -25,8 +25,8 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
     <div
       className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${
         isCompleted
-          ? "bg-zinc-900/50 border-zinc-800"
-          : "bg-zinc-900 border-zinc-700 hover:border-zinc-600"
+          ? "bg-zinc-50/50 border-zinc-200 dark:bg-zinc-900/50 dark:border-zinc-800"
+          : "bg-zinc-50 border-zinc-200 hover:border-zinc-300 dark:bg-zinc-900 dark:border-zinc-700 dark:hover:border-zinc-600"
       }`}
     >
       <button
@@ -34,7 +34,7 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
         className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
           isCompleted
             ? "bg-green-600 border-green-600"
-            : "border-zinc-500 hover:border-green-500"
+            : "border-zinc-400 hover:border-green-500 dark:border-zinc-500"
         }`}
         aria-label={isCompleted ? "Mark as pending" : "Mark as complete"}
       >
@@ -58,7 +58,7 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
       <div className="flex-1 min-w-0">
         <p
           className={`font-medium truncate ${
-            isCompleted ? "text-zinc-500 line-through" : "text-zinc-100"
+            isCompleted ? "text-zinc-400 line-through dark:text-zinc-500" : "text-zinc-900 dark:text-zinc-100"
           }`}
         >
           {task.title}
@@ -66,7 +66,7 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
         {task.dueDate && (
           <p
             className={`text-sm mt-1 ${
-              isCompleted ? "text-zinc-600" : "text-zinc-400"
+              isCompleted ? "text-zinc-400 dark:text-zinc-600" : "text-zinc-500 dark:text-zinc-400"
             }`}
           >
             Due: {formatDate(task.dueDate)}
@@ -76,7 +76,7 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
 
       <button
         onClick={() => onDelete(task.id)}
-        className="p-2 text-zinc-500 hover:text-red-500 hover:bg-zinc-800 rounded-lg transition-colors"
+        className="p-2 text-zinc-400 hover:text-red-500 hover:bg-zinc-100 dark:text-zinc-500 dark:hover:bg-zinc-800 rounded-lg transition-colors"
         aria-label="Delete task"
       >
         <svg
