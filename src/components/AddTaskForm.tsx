@@ -3,11 +3,12 @@
 import { useState, FormEvent } from "react";
 
 interface AddTaskFormProps {
-  onAddTask: (title: string, dueDate: string | null) => void;
+  onAddTask: (title: string, description: string | null, dueDate: string | null) => void;
 }
 
 export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -15,8 +16,9 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
     e.preventDefault();
     if (!title.trim()) return;
     
-    onAddTask(title.trim(), dueDate || null);
+    onAddTask(title.trim(), description.trim() || null, dueDate || null);
     setTitle("");
+    setDescription("");
     setDueDate("");
     setIsExpanded(false);
   };
@@ -54,6 +56,20 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
         </div>
 
         <div>
+          <label htmlFor="description" className="block text-sm font-medium text-zinc-300 mb-1">
+            Description (optional)
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Add more details about this task..."
+            rows={3}
+            className="w-full px-4 py-2 rounded-lg bg-zinc-800 border border-zinc-600 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
+          />
+        </div>
+
+        <div>
           <label htmlFor="dueDate" className="block text-sm font-medium text-zinc-300 mb-1">
             Due Date (optional)
           </label>
@@ -72,6 +88,7 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
             onClick={() => {
               setIsExpanded(false);
               setTitle("");
+              setDescription("");
               setDueDate("");
             }}
             className="px-4 py-2 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"

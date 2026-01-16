@@ -63,10 +63,19 @@ export function TaskItem({ task, onToggleComplete, onDelete }: TaskItemProps) {
         >
           {task.title}
         </p>
+        {task.description && (
+          <p
+            className={`text-sm mt-1 line-clamp-2 ${
+              isCompleted ? "text-zinc-600 line-through" : "text-zinc-400"
+            }`}
+          >
+            {task.description}
+          </p>
+        )}
         {task.dueDate && (
           <p
             className={`text-sm mt-1 ${
-              isCompleted ? "text-zinc-600" : "text-zinc-400"
+              isCompleted ? "text-zinc-600" : "text-zinc-500"
             }`}
           >
             Due: {formatDate(task.dueDate)}
