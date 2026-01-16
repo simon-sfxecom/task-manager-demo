@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { Task, TaskFilter as FilterType } from "@/types/task";
-import { TaskList, AddTaskForm, TaskFilter } from "@/components";
+import { TaskList, AddTaskForm, TaskFilter, SearchBar } from "@/components";
 
 const STORAGE_KEY = "task-manager-tasks";
 
@@ -28,11 +28,13 @@ function saveTasks(tasks: Task[]): void {
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>(() => loadTasks());
   const [filter, setFilter] = useState<FilterType>("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const addTask = useCallback((title: string, dueDate: string | null) => {
+  const addTask = useCallback((title: string, description: string | null, dueDate: string | null) => {
     const newTask: Task = {
       id: generateId(),
       title,
+      description,
       status: "pending",
       dueDate,
       createdAt: new Date().toISOString(),
@@ -71,9 +73,23 @@ export default function Home() {
   }), [tasks]);
 
   const filteredTasks = useMemo(() => {
-    if (filter === "all") return tasks;
-    return tasks.filter((task) => task.status === filter);
-  }, [tasks, filter]);
+    let result = tasks;
+    
+    if (filter !== "all") {
+      result = result.filter((task) => task.status === filter);
+    }
+    
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      result = result.filter((task) => {
+        const titleMatch = task.title.toLowerCase().includes(query);
+        const descriptionMatch = task.description?.toLowerCase().includes(query) ?? false;
+        return titleMatch || descriptionMatch;
+      });
+    }
+    
+    return result;
+  }, [tasks, filter, searchQuery]);
 
   return (
     <main className="min-h-screen py-8 px-4">
@@ -85,6 +101,12 @@ export default function Home() {
 
         <div className="space-y-6">
           <AddTaskForm onAddTask={addTask} />
+          
+          <SearchBar
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search tasks by title or description..."
+          />
           
           <div className="flex items-center justify-between">
             <TaskFilter
