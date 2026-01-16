@@ -12,7 +12,7 @@ interface TaskListProps {
 export function TaskList({ tasks, onToggleComplete, onDelete }: TaskListProps) {
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-12 text-zinc-500">
+      <div className="text-center py-12 text-zinc-400 dark:text-zinc-500">
         <p className="text-lg">No tasks yet</p>
         <p className="text-sm mt-1">Add a task to get started</p>
       </div>

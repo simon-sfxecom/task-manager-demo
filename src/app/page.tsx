@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { Task, TaskFilter as FilterType } from "@/types/task";
-import { TaskList, AddTaskForm, TaskFilter } from "@/components";
+import { TaskList, AddTaskForm, TaskFilter, ThemeToggle } from "@/components";
 
 const STORAGE_KEY = "task-manager-tasks";
 
@@ -78,9 +78,12 @@ export default function Home() {
   return (
     <main className="min-h-screen py-8 px-4">
       <div className="max-w-2xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-100 mb-2">Task Manager</h1>
-          <p className="text-zinc-400">Keep track of your tasks and stay organized</p>
+        <header className="mb-8 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">Task Manager</h1>
+            <p className="text-zinc-500 dark:text-zinc-400">Keep track of your tasks and stay organized</p>
+          </div>
+          <ThemeToggle />
         </header>
 
         <div className="space-y-6">
